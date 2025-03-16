@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cihaz Bilgileri</title>
+</head>
+<body>
+    <h2>Kullanıcı Cihaz Bilgileri</h2>
+    <p id="deviceInfo"></p>
+
+    <script>
+        function getDeviceInfo() {
+            let info = `
+                Tarayıcı: ${navigator.userAgent} <br>
+                Platform: ${navigator.platform} <br>
+                Dil: ${navigator.language} <br>
+                Çözünürlük: ${screen.width}x${screen.height}
+            `;
+            document.getElementById("deviceInfo").innerHTML = info;
+        }
+        
+        getDeviceInfo();
+    </script>
+</body>
+</html>
