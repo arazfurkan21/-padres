@@ -3,24 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cihaz Bilgileri</title>
+    <title>IP Adresini Al</title>
 </head>
 <body>
-    <h2>Kullanıcı Cihaz Bilgileri</h2>
-    <p id="deviceInfo"></p>
+
+    <h2>IP Adresiniz:</h2>
+    <p id="ip">Yükleniyor...</p>
 
     <script>
-        function getDeviceInfo() {
-            let info = `
-                Tarayıcı: ${navigator.userAgent} <br>
-                Platform: ${navigator.platform} <br>
-                Dil: ${navigator.language} <br>
-                Çözünürlük: ${screen.width}x${screen.height}
-            `;
-            document.getElementById("deviceInfo").innerHTML = info;
+        function getIP(ipADDR) {
+            document.getElementById("ip").innerText = "IP Adresiniz: " + ipADDR.ip;
         }
-        
-        getDeviceInfo();
     </script>
+
+    <script src="https://api.ipify.org/?format=jsonp&callback=getIP"></script>
+
 </body>
 </html>
