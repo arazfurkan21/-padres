@@ -3,61 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cihaz ve IP Bilgileri</title>
+    <title>Bildirim Gönder</title>
 </head>
 <body>
 
-    <h2>Kullanıcı Cihaz ve IP Bilgileri</h2>
-    
-    <h3>IP Adresiniz:</h3>
-    <p id="ip">Yükleniyor...</p>
-
-    <h3>Cihaz Bilgileri:</h3>
-    <p id="deviceInfo">Yükleniyor...</p>
+    <h2>Web Sitesinden Telefon Bildirimi Gönderme</h2>
+    <button onclick="sendNotification()">Bildirim Gönder</button>
 
     <script>
-        // IP Adresini Al
-        function getIP(ipADDR) {
-            document.getElementById("ip").innerText = "IP Adresiniz: " + ipADDR.ip;
-        }
-
-        // Cihaz Bilgilerini Al
-        function getDeviceInfo() {
-            let memory = navigator.deviceMemory || "Bilinmiyor"; // RAM bilgisi
-            let cores = navigator.hardwareConcurrency || "Bilinmiyor"; // İşlemci çekirdek sayısı
-            let onlineStatus = navigator.onLine ? "Bağlı" : "Bağlı Değil"; // İnternet bağlantı durumu
-            let batteryInfo = "Bilgi alınamıyor";
-
-            // Batarya bilgisini al
-            if (navigator.getBattery) {
-                navigator.getBattery().then(battery => {
-                    batteryInfo = `Şarj Durumu: ${(battery.level * 100).toFixed(0)}% | ${battery.charging ? "Şarj Oluyor" : "Şarj Olmuyor"}`;
-                    showDeviceInfo();
+        function sendNotification() {
+            // Kullanıcıdan bildirim izni iste
+            if (Notification.permission === "granted") {
+                showNotification();
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        showNotification();
+                    }
                 });
-            } else {
-                showDeviceInfo();
-            }
-
-            function showDeviceInfo() {
-                let info = `
-                    Tarayıcı: ${navigator.userAgent} <br>
-                    Platform: ${navigator.platform} <br>
-                    Dil: ${navigator.language} <br>
-                    Çözünürlük: ${screen.width}x${screen.height} <br>
-                    RAM: ${memory} GB <br>
-                    İşlemci Çekirdek Sayısı: ${cores} <br>
-                    İnternet Durumu: ${onlineStatus} <br>
-                    ${batteryInfo}
-                `;
-                document.getElementById("deviceInfo").innerHTML = info;
             }
         }
 
-        getDeviceInfo();
+        function showNotification() {
+            new Notification("Merhaba!", {
+                body: "Bu, web sitenizden gönderilen bir bildirimdir.",
+                icon: "https://cdn-icons-png.flaticon.com/512/1827/1827343.png" // İsteğe bağlı ikon
+            });
+        }
     </script>
-
-    <!-- IP adresini almak için ipify API -->
-    <script src="https://api.ipify.org/?format=jsonp&callback=getIP"></script>
 
 </body>
 </html>
